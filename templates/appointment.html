@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body {
+            background-color: #f5f5f5; /* Light background for the appointment page */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px; /* Space at the top */
+        }
+
+        .logo-container img {
+            width: 400px; /* Smaller logo size */
+            height: auto;
+            transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for effects */
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1); /* Slightly enlarge on hover */
+            opacity: 0.8; /* Change opacity on hover */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container img {
+            animation: float 3s ease-in-out; /* Floating animation */
+        }
+
+        .appointment-form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Centering vertically */
+            text-align: center;
+            padding-top: 20px; /* Space for the logo */
+        }
+
+        .appointment-form {
+            background-color: rgba(0, 0, 0, 0.8); /* Dark background for form */
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .appointment-form h2 {
+            color: #007bff; /* Distinct color for the heading */
+            margin-bottom: 20px;
+        }
+
+        .appointment-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .appointment-form select,
+        .appointment-form input[type="email"],
+        .appointment-form input[type="text"] {
+            width: calc(100% - 20px); /* Full width minus padding */
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .appointment-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-form button:hover {
+            background-color: #0056b3;
+        }
+        body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Header Section */
+header {
+    background-color: #f2f2f2;
+    height: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px; /* Added space on the left */
+}
+
+.logo {
+    width: 300px;
+    height: 60px;
+    background-image: url("{{ url_for('static', filename='logo.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0; /* For fade-in effect */
+    animation: fadeIn 2s forwards;
+    transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Main Content with Video */
+.main-content {
+    position: relative;
+    height: 600px;
+    background-color: #000;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.overlay {
+    position: absolute;
+    width: 40%;
+    height: 94%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #113f67;
+    font-size: 1.5em;
+}
+
+/* Typing effect */
+#animated-text {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid rgba(0,0,0,0.75); /* Cursor */
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    color: #113f67;
+    animation: typing 3s steps(100, end), blink 0.75s step-end infinite;
+}
+
+/* Typing effect keyframes */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: rgba(0,0,0,0); }
+}
+
+/* Color Panels Section */
+.color-panels {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+/* Card styles for panels */
+.card {
+    flex: 1;
+    height: 150px;
+    margin: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.card img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Specific color backgrounds */
+.blue { background-color: #00a4e4; }
+.green { background-color: #76bc43; }
+.red { background-color: #d8412f; }
+.purple { background-color: #92278f; }
+
+
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Navbar Section */
+.navbar {
+    background-color: #113f67;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    animation: slideIn 1s ease-out 2s forwards; /* Slide-in animation with 2-second delay */
+    opacity: 0; /* Initially hidden */
+}
+
+/* Keyframes for horizontal slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%); /* Start from left of the viewport */
+        opacity: 0; /* Initially hidden */
+    }
+    to {
+        transform: translateX(0); /* Move to original position */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+}
+
+
+/* Content Section */
+.content {
+    padding: 50px;
+    text-align: center;
+}
+
+/* Brain Lens Section */
+#brain-lens h2 {
+    color: #113f67;
+    font-size: 2em;
+}
+
+#brain-lens p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Upload Form */
+.upload-area {
+    margin-top: 20px;
+    border: 2px dashed #113f67;
+    padding: 40px;
+    background-color: white;
+}
+
+.upload-box-content img {
+    width: 100px;
+    height: auto;
+}
+
+.upload-button {
+    background-color: #113f67;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Transition Image */
+.transition-image {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.transition-image img {
+    width: 300px;
+    height: auto;
+}
+
+/* Brain Disorder Section */
+.brain-disorder-section {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+/* Image Styles with 3D Look */
+.brain-disorder-image {
+    width: 550px; /* Adjust the size of the image as needed */
+    margin-right: 20px; /* Add some space between the image and the text */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3); /* 3D shadow effect */
+    transform: perspective(600px) rotateY(10deg); /* 3D perspective */
+    transition: transform 0.3s ease;
+}
+
+.brain-disorder-image:hover {
+    transform: perspective(600px) rotateY(0deg); /* Image straightens on hover */
+}
+
+/* Brain Complications Text Area */
+.brain-complications {
+    flex: 1;
+    background-color: #d3d3d3; /* Light grey background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.brain-complications h2 {
+    color: #113f67;
+    margin-bottom: 10px;
+}
+
+.brain-complications ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.brain-complications li {
+    color: #113f67;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+
+/* Styles for the new link container */
+        .links-container {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 150px; /* Adjust as needed */
+            display: flex;
+            align-items: center; /* Align items vertically */
+            gap: 50px; /* Space between buttons */
+        }
+
+        .links-container a {
+            background-color: #f2f2f2; /* Button background color */
+            color: #113f67; /* Button text color */
+            padding: 18px 1px; /* Smaller padding for smaller buttons */
+            text-align: center;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+            font-size: 20px; /* Smaller font size */
+        }
+
+        .links-container a:hover {
+            background-color: #79c2d0; /* Hover background color */
+        }
+
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #113f67;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #79c2d0;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Ensure the main content is positioned properly */
+        .main-content {
+            position: relative; /* Allow for absolute positioning of links */
+        }
+
+        /* Adjusting the Free Lens link to match Book an Appointment */
+        .dropdown > a {
+            padding: 18px 20px; /* Adjusted padding */
+            background-color: #f2f2f2;
+            color: #113f67;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown > a:hover {
+            background-color: #79c2d0;
+        }
+        /* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Header Section */
+header {
+    background-color: #f2f2f2;
+    height: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px; /* Added space on the left */
+}
+
+.logo {
+    width: 300px;
+    height: 60px;
+    background-image: url("{{ url_for('static', filename='logo.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0; /* For fade-in effect */
+    animation: fadeIn 2s forwards;
+    transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+.footer-band {
+        background-color: #616C6E; /* Dark shade for the band */
+        color: #f2f2f2; /* Light text color */
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        width: 100%;
+        height:60px;
+        animation: slideIn 1s ease-out; /* Slide-in animation */
+        box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .footer-band img {
+        width: 1px; /* Smaller image size */
+        height: auto;
+        vertical-align: middle; /* Align image with text */
+        margin-right: 10px; /* Space between image and text */
+    }
+
+    .footer-band p {
+        display: inline; /* Ensure text is in line with image */
+        text-align: justify; /* Justify text */
+        max-width: 80%; /* Optional: Restrict text width */
+        margin: 0; /* Remove default margin */
+    }
+
+    /* Keyframes for horizontal slide-in animation */
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%); /* Start from left of the viewport */
+            opacity: 0; /* Initially hidden */
+        }
+        to {
+            transform: translateX(0); /* Move to original position */
+            opacity: 1; /* Fully visible */
+        }
+    }
+
+/* Logo Image Styles */
+.logo {
+    /* Ensures the logo is aligned left and positioned properly */
+    position: relative; 
+    display: flex; /* Using flex to align */
+    align-items: center;
+    padding: 10px; /* Adjust padding as needed */
+}
+
+/* Initial styling for the logo image */
+.logo-image {
+    width: 250px; /* Very small size */
+    height: auto; /* Maintains the aspect ratio */
+    margin-left: 0; /* Left-aligned */
+    transform: translateX(-100px); /* Start position for float-in effect */
+    opacity: 0; /* Hidden initially for the animation */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, transform 0.3s ease; /* Transitions for both hover and float-in effects */
+}
+
+/* Float-in effect */
+.logo-image {
+    animation: floatIn 2s forwards; /* Animation to float in */
+}
+
+/* Keyframes for float-in effect */
+@keyframes floatIn {
+    0% {
+        transform: translateX(-100px); /* Starting position */
+        opacity: 0; /* Start hidden */
+    }
+    100% {
+        transform: translateX(0); /* End position */
+        opacity: 1; /* End visible */
+    }
+}
+
+/* Zoom-in effect on hover */
+.logo-image:hover {
+    transform: scale(1.5); /* Zoom in on hover */
+    cursor: pointer; /* Optional cursor change on hover */
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+    <div class="logo"></div>
+</header>
+
+
+    <!-- Links Container Section -->
+    <div class="links-container">
+        <div class="dropdown">
+            <a href="#">Free Lens</a>
+            <div class="dropdown-content">
+                <a href="/brain">Brain Tumor</a>
+                <a href="/lung">Lung Cancer</a>
+                <a href="/kidney">Kidney Disease</a>
+                <a href="/tb">Tuberculosis</a>
+            </div>
+        </div>
+        <a href="{{ url_for('about') }}" target="_blank">About Us</a>
+        <a href="{{ url_for('appointment') }}" target="_blank">Book an Appointment</a>
+    </div>    
+
+
+    <div class="appointment-form-container">
+        <div class="appointment-form">
+            <h2>Schedule Your Appointment</h2>
+            <p>Just one click away from your appointment.</p>
+            <form id="appointmentForm">
+                <label for="doctor">Select Doctor:</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="Dr. A. Kumar MD, MBBS, Dept. of Cardiology">Dr. A. Kumar MD, MBBS, Dept. of Cardiology</option>
+                    <option value="Dr. B. Patel MD, MBBS, Dept. of Neurology">Dr. B. Patel MD, MBBS, Dept. of Neurology</option>
+                    <option value="Dr. C. Sharma MD, MBBS, Dept. of Orthopedics">Dr. C. Sharma MD, MBBS, Dept. of Orthopedics</option>
+                    <option value="Dr. D. Gupta MD, MBBS, Dept. of Pediatrics">Dr. D. Gupta MD, MBBS, Dept. of Pediatrics</option>
+                    <option value="Dr. E. Singh MD, MBBS, Dept. of Dermatology">Dr. E. Singh MD, MBBS, Dept. of Dermatology</option>
+                    <option value="Dr. F. Rao MD, MBBS, Dept. of Oncology">Dr. F. Rao MD, MBBS, Dept. of Oncology</option>
+                    <option value="Dr. G. Menon MD, MBBS, Dept. of Gastroenterology">Dr. G. Menon MD, MBBS, Dept. of Gastroenterology</option>
+                    <option value="Dr. H. Iyer MD, MBBS, Dept. of Nephrology">Dr. H. Iyer MD, MBBS, Dept. of Nephrology</option>
+                    <option value="Dr. I. Joshi MD, MBBS, Dept. of Pulmonology">Dr. I. Joshi MD, MBBS, Dept. of Pulmonology</option>
+                    <option value="Dr. J. Varma MD, MBBS, Dept. of Rheumatology">Dr. J. Varma MD, MBBS, Dept. of Rheumatology</option>
+                    <option value="Dr. K. Nair MD, MBBS, Dept. of Endocrinology">Dr. K. Nair MD, MBBS, Dept. of Endocrinology</option>
+                    <option value="Dr. L. Desai MD, MBBS, Dept. of Urology">Dr. L. Desai MD, MBBS, Dept. of Urology</option>
+                    <option value="Dr. M. Rao MD, MBBS, Dept. of ENT (Ear, Nose, and Throat)">Dr. M. Rao MD, MBBS, Dept. of ENT (Ear, Nose, and Throat)</option>
+                    <option value="Dr. N. Kapoor MD, MBBS, Dept. of Hematology">Dr. N. Kapoor MD, MBBS, Dept. of Hematology</option>
+                    <option value="Dr. O. Sinha MD, MBBS, Dept. of Internal Medicine">Dr. O. Sinha MD, MBBS, Dept. of Internal Medicine</option>
+                    <option value="Dr. P. Reddy MD, MBBS, Dept. of Obstetrics and Gynecology">Dr. P. Reddy MD, MBBS, Dept. of Obstetrics and Gynecology</option>
+                    <option value="Dr. Q. Suresh MD, MBBS, Dept. of General Surgery">Dr. Q. Suresh MD, MBBS, Dept. of General Surgery</option>
+                    <option value="Dr. R. Choudhury MD, MBBS, Dept. of Cardiac Surgery">Dr. R. Choudhury MD, MBBS, Dept. of Cardiac Surgery</option>
+                    <option value="Dr. S. Mehta MD, MBBS, Dept. of Emergency Medicine">Dr. S. Mehta MD, MBBS, Dept. of Emergency Medicine</option>
+                    <option value="Dr. T. Patel MD, MBBS, Dept. of Anesthesiology">Dr. T. Patel MD, MBBS, Dept. of Anesthesiology</option>
+                </select>
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" required>
+                <br>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+<!-- Footer Band Section -->
+<div class="footer-band">
+    <a href="https://abcd.com">
+        <img src="{{ url_for('static', filename='github_.png') }}" alt="Footer Image" style="width: 50px; height: auto;">
+    </a>    
+
+    <p>© 2024 Health Omega. All Rights Reserved. </p>
+</div>
+
+
+    <script src="scripts.js"></script>
+</body>
+</html>

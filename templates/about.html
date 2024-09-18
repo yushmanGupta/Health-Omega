@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HealthO'Mega</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            /* background-color: #f0f2f5; */
+            background-image: url("{{ url_for('static', filename='Background.jpg') }}");
+            color: #333;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .content {
+            padding-bottom: 80px; /* Space for the button */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+             min-height: 80vh;
+}
+        
+
+        .logo-container {
+            text-align: center;
+            margin: 20px;
+            padding: 5px;
+        }
+
+        .logo-container img {
+            width: 300px;
+            height: auto;
+            transition: transform 0.7s ease-in-out;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.2);
+        }
+
+        h1 {
+            color: #374646;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .card {
+            background-color: #FCFCFC; 
+            /* background-image: url("{{ url_for('static', filename='Card Bg3.jpg') }}"); */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            width: 400px;
+            margin-top: 20px;
+            text-align: left;
+            cursor: pointer; /* Cursor change to indicate clickability */
+            position: relative; /* To position the popup relative to the card */
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit:cover;
+        }
+
+        .card p {
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Verdana', sans-serif;
+            color: #444;
+            margin: 0;
+        }
+
+        .home-button {
+            background-color: #113f67;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin: 20px auto; /* Center horizontally and add margin */
+        }
+
+        .home-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .footer-band {
+            background-color: #616C6E; /* Dark shade for the band */
+            color: #f2f2f2; /* Light text color */
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height:60px;
+            animation: slideIn 1s ease-out; /* Slide-in animation */
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+
+        .footer-band img {
+            width: 50px; /* Smaller image size */
+            height: auto;
+            vertical-align: middle; /* Align image with text */
+            margin-right: 10px; /* Space between image and text */
+        }
+
+        .footer-band p {
+            display: inline; /* Ensure text is in line with image */
+            text-align: justify; /* Justify text */
+            max-width: 80%; /* Optional: Restrict text width */
+            margin: 0; /* Remove default margin */
+        }
+
+        /* Keyframes for horizontal slide-in animation */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%); /* Start from left of the viewport */
+                opacity: 0; /* Initially hidden */
+            }
+            to {
+                transform: translateX(0); /* Move to original position */
+                opacity: 1; /* Fully visible */
+            }
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: absolute; /* Positioned relative to card */
+            left: 420px; /* Position right of the card */
+            top: 0;
+            background-color: white;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            z-index: 10;
+            width: 350px;
+            animation: wobble 1s ease; /* Wobble animation */
+        }
+
+        .popup img {
+            width: 200px; /* Larger image size */
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .popup p {
+            font-size: 1em;
+            color: #333;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .popup h2 {
+            font-size: 1.8em; /* Bigger font for name */
+            color: #007bff;
+            margin: 10px 0;
+        }
+
+        @keyframes wobble {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            15% {
+                transform: translateX(-25px);
+            }
+            30% {
+                transform: translateX(20px);
+            }
+            45% {
+                transform: translateX(-15px);
+            }
+            60% {
+                transform: translateX(10px);
+            }
+            75% {
+                transform: translateX(-5px);
+            }
+        }
+        /* Styling for the Go Back link */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: white;
+            background-color: #113f67;
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .back-link:hover {
+            background-color: #79c2d0; 
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center; /* Center the image */
+}
+        
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}">
+        </div>
+        <h1>Our Team</h1>
+
+        <div class="card" onclick="showPopup(this)">
+    <img src="{{ url_for('static', filename='Archita 2.jpg') }}" alt="Archita Bose">
+    <p>Archita Bose,<br> Data Scientist</p>
+    <div class="popup">
+        <img src="{{ url_for('static', filename='Archita 2.jpg') }}" alt="Archita Bose">
+        <h2>Archita Bose</h2>
+        <p>Hi! I'm Archita, the Data Scientist. I analyze complex data, build predictive models, and extract insights to drive informed decision-making and enhance the accuracy of our application.</p>
+    </div>
+</div>
+
+<div class="card" onclick="showPopup(this)">
+    <img src="{{ url_for('static', filename='ayushman.jpg') }}" alt="Ayushman Gupta">
+    <p>Ayushman Gupta, Backend Developer</p>
+    <div class="popup">
+        <img src="{{ url_for('static', filename='ayushman.jpg') }}" alt="Ayushman Gupta">
+        <h2>Ayushman Gupta</h2>
+        <p>Hello! I'm Ayushman, responsible for the backend of this platform. I ensure seamless data handling, secure storage, and smooth server operations.</p>
+    </div>
+</div>
+
+<div class="card" onclick="showPopup(this)">
+    <img src="{{ url_for('static', filename='file.jpg') }}" alt="Soumya Upadhyay">
+    <p>Soumya Upadhyay,<br> Cloud Engineer</p>
+    <div class="popup">
+        <img src="{{ url_for('static', filename='file.jpg') }}" alt="Soumya Upadhyay">
+        <h2>Soumya Upadhyay</h2>
+        <p>Hey! I'm Soumya, the Cloud Engineer. I ensure the smooth deployment, scaling, and management of our cloud infrastructure, keeping our application secure and performing at its best.</p>
+    </div>
+</div>
+
+
+        <div class="card" onclick="showPopup(this)">
+    <img src="{{ url_for('static', filename='WhatsApp Image 2024-09-04 at 01.29.29_81afc7bf.jpg') }}" alt="Soham Sengupta">
+    <p>Soham Sengupta, Frontend Developer</p>
+    <div class="popup">
+        <img src="{{ url_for('static', filename='WhatsApp Image 2024-09-04 at 01.29.29_81afc7bf.jpg') }}" alt="Soham Sengupta">
+        <h2>Soham Sengupta</h2>
+        <p>Hi! I'm Soham, the Frontend Developer. I designed and developed the user interface for this site, focusing on a clean, responsive layout and smooth user experience. I hope you find it intuitive and engaging!</p>
+    </div>
+</div>
+
+
+
+        <!-- Home Button placed at the end of the content -->
+        <a class="back-link" href="/">Go back to Home</a>
+    </div>
+
+    <!-- Footer Band Section -->
+    <div class="footer-band">
+        <a href="https://abcd.com">
+            <img src="{{ url_for('static', filename='github_.png') }}" alt="Footer Image">
+        </a>    
+        <p>© 2024 Health Omega. All Rights Reserved. </p>
+    </div>
+
+    <script>
+        function showPopup(cardElement) {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(p => p.style.display = 'none'); // Hide all popups
+            const popup = cardElement.querySelector('.popup'); // Show the popup for the clicked card
+            if (popup) {
+                popup.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const cardElements = document.querySelectorAll('.card');
+            const isCardClick = Array.from(cardElements).some(card => card.contains(event.target));
+            if (!isCardClick) {
+                const popups = document.querySelectorAll('.popup');
+                popups.forEach(p => p.style.display = 'none'); // Hide all popups if clicking outside
+            }
+        });
+    </script>
+</body>
+</html>

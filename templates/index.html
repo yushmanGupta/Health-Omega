@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>Health OMEGA</title>
+    <style>
+        /* Styles for the new link container */
+        .links-container {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 150px; /* Adjust as needed */
+            display: flex;
+            align-items: center; /* Align items vertically */
+            gap: 50px; /* Space between buttons */
+        }
+
+        .links-container a {
+            background-color: #f2f2f2; /* Button background color */
+            color: #113f67; /* Button text color */
+            padding: 18px 1px; /* Smaller padding for smaller buttons */
+            text-align: center;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+            font-size: 20px; /* Smaller font size */
+        }
+
+        .links-container a:hover {
+            background-color: #79c2d0; /* Hover background color */
+        }
+
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #113f67;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #79c2d0;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Ensure the main content is positioned properly */
+        .main-content {
+            position: relative; /* Allow for absolute positioning of links */
+        }
+
+        /* Adjusting the Free Lens link to match Book an Appointment */
+        .dropdown > a {
+            padding: 18px 20px; /* Adjusted padding */
+            background-color: #f2f2f2;
+            color: #113f67;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown > a:hover {
+            background-color: #79c2d0;
+        }
+        /* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Header Section */
+header {
+    background-color: #f2f2f2;
+    height: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px; /* Added space on the left */
+}
+
+.logo {
+    width: 300px;
+    height: 60px;
+    background-image: url("{{ url_for('static', filename='logo.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0; /* For fade-in effect */
+    animation: fadeIn 2s forwards;
+    transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Main Content with Video */
+.main-content {
+    position: relative;
+    height: 800px;
+    background-color: #000;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.overlay {
+    position: absolute;
+    width: 40%;
+    height: 94%;
+    right: 0;
+    background-color: rgba(255, 255, 255,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #113f67;
+    font-size: 2em;
+    font-family: 'Poppins', sans-serif;
+
+
+
+}
+
+/* Typing effect */
+#animated-text {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid rgba(0,0,0,0.75); /* Cursor */
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    color: #113f67;
+    animation: typing 3s steps(100, end), blink 0.75s step-end infinite;
+}
+
+/* Typing effect keyframes */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: rgba(0,0,0,0); }
+}
+
+/* Color Panels Section */
+.color-panels {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+/* Card styles for panels */
+.card {
+    flex: 1;
+    height: 300px;
+    margin: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    transition: transform 0.3s ease;
+    margin-left: 20px;
+    opacity: 0.7;
+}
+
+.card img {
+    max-width: 160px;
+    max-height: 160px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* Specific color backgrounds */
+.blue { background-color: #00a4e4; }
+.green { background-color: #76bc43; }
+.red { background-color: #d8412f; }
+.purple { background-color: #92278f; }
+
+
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Navbar Section */
+.navbar {
+    background-color: #113f67;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    animation: slideIn 1s ease-out 2s forwards; /* Slide-in animation with 2-second delay */
+    opacity: 0; /* Initially hidden */
+}
+
+/* Keyframes for horizontal slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%); /* Start from left of the viewport */
+        opacity: 0; /* Initially hidden */
+    }
+    to {
+        transform: translateX(0); /* Move to original position */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+}
+
+
+/* Content Section */
+.content {
+    padding: 50px;
+    text-align: center;
+}
+
+/* Brain Lens Section */
+#brain-lens h2 {
+    color: #113f67;
+    font-size: 2em;
+}
+
+#brain-lens p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Upload Form */
+.upload-area {
+    margin-top: 20px;
+    border: 2px dashed #113f67;
+    padding: 40px;
+    background-color: white;
+}
+
+.upload-box-content img {
+    width: 100px;
+    height: auto;
+}
+
+.upload-button {
+    background-color: #113f67;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Transition Image */
+.transition-image {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.transition-image img {
+    width: 300px;
+    height: auto;
+}
+
+/* Brain Disorder Section */
+.brain-disorder-section {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+/* Image Styles with 3D Look */
+.brain-disorder-image {
+    width: 350px; /* Adjust the size of the image as needed */
+    height: 350px;
+    margin-left: 40px;
+    border-radius: 30px;
+    margin-right: 20px; /* Add some space between the image and the text */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3); /* 3D shadow effect */
+    transform: perspective(600px) rotateY(0deg); /* Initially linear */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.brain-disorder-image:hover {
+    transform: perspective(600px) rotateY(10deg); /* Tilt effect on hover */
+}
+
+/* Brain Complications Text Area */
+.brain-complications {
+    flex: 1;
+    background-color: #d3d3d3; /* Light grey background */
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.brain-complications h2 {
+    color: #113f67;
+    margin-bottom: 10px;
+}
+
+.brain-complications ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+/* .brain-complications li {
+    color: #113f67;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+} */
+
+
+    .footer-band {
+        background-color: #616C6E; /* Dark shade for the band */
+        color: #f2f2f2; /* Light text color */
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        width: 100%;
+        height:60px;
+        animation: slideIn 1s ease-out; /* Slide-in animation */
+        box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .footer-band img {
+        width: 1px; /* Smaller image size */
+        height: auto;
+        vertical-align: middle; /* Align image with text */
+        margin-right: 10px; /* Space between image and text */
+    }
+
+    .footer-band p {
+        display: inline; /* Ensure text is in line with image */
+        text-align: justify; /* Justify text */
+        max-width: 80%; /* Optional: Restrict text width */
+        margin: 0; /* Remove default margin */
+    }
+
+    /* Keyframes for horizontal slide-in animation */
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%); /* Start from left of the viewport */
+            opacity: 0; /* Initially hidden */
+        }
+        to {
+            transform: translateX(0); /* Move to original position */
+            opacity: 1; /* Fully visible */
+        }
+    }
+
+/* Logo Image Styles */
+.logo {
+    /* Ensures the logo is aligned left and positioned properly */
+    position: relative; 
+    display: flex; /* Using flex to align */
+    align-items: center;
+    padding: 10px; /* Adjust padding as needed */
+}
+
+/* Initial styling for the logo image */
+.logo-image {
+    width: 250px; /* Very small size */
+    height: auto; /* Maintains the aspect ratio */
+    margin-left: 0; /* Left-aligned */
+    transform: translateX(-100px); /* Start position for float-in effect */
+    opacity: 0; /* Hidden initially for the animation */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, transform 0.3s ease; /* Transitions for both hover and float-in effects */
+}
+
+/* Float-in effect */
+.logo-image {
+    animation: floatIn 2s forwards; /* Animation to float in */
+}
+
+/* Keyframes for float-in effect */
+@keyframes floatIn {
+    0% {
+        transform: translateX(-100px); /* Starting position */
+        opacity: 0; /* Start hidden */
+    }
+    100% {
+        transform: translateX(0); /* End position */
+        opacity: 1; /* End visible */
+    }
+}
+
+/* Zoom-in effect on hover */
+.logo-image:hover {
+    transform: scale(1.5); /* Zoom in on hover */
+    cursor: pointer; /* Optional cursor change on hover */
+}
+
+    </style>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo"></div>
+    </header>
+
+
+    <!-- Links Container Section -->
+    <div class="links-container">
+        <div class="dropdown">
+            <a href="#">Free Lens</a>
+            <div class="dropdown-content">
+                <a href="/brain">Brain Tumor</a>
+                <a href="/lung">Lung Cancer</a>
+                <a href="/kidney">Kidney Disease</a>
+                <a href="/tb">Tuberculosis</a>
+            </div>
+        </div>
+        <a href="{{ url_for('about') }}" target="_blank">About Us</a>
+        <a href="{{ url_for('appointment') }}" target="_blank">Book an Appointment</a>
+    </div>
+
+    <body>
+        <!-- Main Section with Video -->
+        <div class="main-content">
+            <video id="videoPlayer" class="background-video" autoplay muted loop>
+                <!-- The first video source will be loaded here -->
+                <source src="{{ url_for('static', filename='4316873-uhd_3840_2160_30fps.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay">
+                <!-- Typing Effect Section -->
+                <section id="animated-text">
+                    <b>Welcome to Health Omega</b> <br><br>
+<p style="text-align: justify;">
+    At Health Omega, we simplify health checks by letting you upload<br>
+    your scan results for fast, AI-driven detection of conditions like<br>
+    brain tumors, kidney issues, lung cancer, and more. Plus, you<br>
+    can easily book appointments with doctors for expert guidance.
+</p>
+<em>Your health, your scans, your care – all in one place.</em>
+
+                </section>
+            </div>
+        </div>
+
+    <!-- Color Panels Section -->
+    <div class="color-panels">
+        <!-- Blue Panel - Brain Lens -->
+        <a href="/brain" class="panel blue card">
+            <img src="{{ url_for('static', filename='outline-of-the-human-brain-clip-art-brain-5bd4da724cde7cb403ff78ad66cffedc.png') }}" height="350px" alt="Brain Lens">
+            <h3>Brain Lens</h3>
+        </a>
+
+        <!-- Green Panel - Lung Lens -->
+        <a href="/lung" class="panel green card">
+            <img src="{{ url_for('static', filename='outline-of-the-human-brain-clip-art-brain-5bd4da724cde7cb403ff78ad66cffedc.png') }}" height="350px" alt="Lung Lens">
+            <h3>Lung Lens</h3>
+        </a>
+
+        <!-- Red Panel - Kidney Lens -->
+        <a href="/kidney" class="panel red card">
+            <img src="{{ url_for('static', filename='pngwing.com.png') }}" height="350px" alt="Kidney Lens">
+            <h3>Kidney Lens</h3>
+        </a>
+
+        <!-- Purple Panel - Tuberculosis Lens -->
+        <a href="/tb" class="panel purple card">
+            <img src="{{ url_for('static', filename='cartoon-smoking-lungs-5f98264b6513cbf16cee56cf878d0a11.png') }}" height="350px" alt="Tuberculosis Lens">
+            <h3>Tuberculosis Lens</h3>
+        </a>
+    </div>
+
+    <!-- Brain Disorder Section -->
+    <div class="brain-disorder-section">
+        <img src="{{ url_for('static', filename='brain-disorder-1576043734.jpg') }}" height="250px" width="400px" alt="Brain Disorder" class="brain-disorder-image">
+        
+        <div class="brain-complications">
+            <h3> Brain Tumor </h3>
+
+            <p> A brain tumor is an abnormal growth of cells in the brain.It can be benign (non-cancerous) or malignant (cancerous)</p>
+            <p> <b>Causes</b> : In case of most brain tumors it is unknown, though genetics and radiation exposure can be factors.</p>
+            <p> <b>Symptoms</b>:headaches, seizures, nausea, and vision problems. </p>
+            <p> <b>Treatment options</b>: surgery, radiation therapy, and chemotherapy.</p>
+
+            <p>Remember that early diagnosis improves the chances of successful treatment. </p>
+
+
+
+        </div>
+    </div> 
+
+    <!-- Lung Disorder Section -->
+    <div class="brain-disorder-section">
+        <img src="{{ url_for('static', filename='illustration-of-human-lungs-and-respiratory-system.jpg') }}" height="600px" width="400px" alt="lung Disorder" class="brain-disorder-image">
+        
+        <div class="brain-complications">
+
+        <h4> Lung Cancer </h4>
+
+        <p> Lung cancer is a type of cancer that starts in the lungs. It is commonly caused by smoking, though non-smokers can also develop it.</p>
+        <p> Types:</p>
+        <ol>
+            <li> <b> Adenocarcinoma </b> </li>
+            
+            <li> <b> Large cell carcinoma</b> </li>
+            
+            <li> <b>Squamous Cell Carcinoma</b> </li>
+        </ol>
+<p> The symptoms causes and tratment depends on the location and type of cancer.Remember that early diagnosis improves the chances of successful treatment. </p>
+        
+          
+
+
+        </div>
+    </div>
+
+
+	<!-- Kidney Disorder Section -->
+	<div class="brain-disorder-section">
+    <img src="{{ url_for('static', filename='gettyimages-843352558.jpg') }}" height="250px" width="400px" alt="tuberculosis Disorder" class="brain-disorder-image">
+    
+    <div class="brain-complications">
+        
+            <h4> <b>Kidney Cyst:</b> </h4> 
+<p>A kidney cyst is a fluid-filled sac that forms in the kidneys.Most kidney cysts are benign and do not cause symptoms or harm.</p>
+            
+            <h4> <b>Kidney Tumor:</b> </h4>
+<p>A kidney tumor is an abnormal growth in the kidney, which can be benign or cancerous.Symptoms may include blood in the urine, pain, and unexplained weight loss.</p>
+            
+
+            <h4> <b>Kidney Stones:</b> </h4>
+<p>Kidney stones are hard deposits of minerals that form in the kidneys.They can cause severe pain, especially during urination, and may require treatment to pass</p>
+            
+
+    </div>
+</div>
+
+
+	<!-- tuberculosis Disorder Section -->
+<div class="brain-disorder-section">
+    <img src="{{ url_for('static', filename='images.jpeg') }}" height="250px" width="400px" alt="tuberculosis Disorder" class="brain-disorder-image">
+    
+    <div class="brain-complications">
+        <h4> Tuberculosis </h4>
+            <p>Tuberculosis (TB) is a serious infectious disease primarily affecting the lungs, caused by the bacterium Mycobacterium tuberculosis. </p>
+            <p> <b>Causes</b> :  Infection with Mycobacterium tuberculosis, spread through airborne droplets from an infected person.</p>
+            <p> <b>Symptoms</b>:Persistent cough, chest pain, weight loss, fever, and night sweats. </p>
+            <p> <b>Treatment options</b>:  A combination of antibiotics, typically including isoniazid, rifampin, ethambutol, and pyrazinamide, taken over several months.</p>
+            
+    
+    </div>
+</div>
+
+<!-- Footer Band Section -->
+<div class="footer-band">
+    <a href="https://abcd.com">
+        <img src="{{ url_for('static', filename='github_.png') }}" alt="Footer Image" style="width: 50px; height: auto;">
+    </a>    
+
+    <p>© 2024 Health Omega. All Rights Reserved. </p>
+</div>
+
+
+<script>
+   // List of video file paths
+   const videos = [
+            "{{ url_for('static', filename='8460388-hd_1920_1080_24fps.mp4') }}",
+            "{{ url_for('static', filename='background_video.mp4') }}",
+            "{{ url_for('static', filename='855481-hd_1920_1080_25fps.mp4') }}"
+        ];
+
+        const videoPlayer = document.getElementById('videoPlayer');
+        const sourceElement = videoPlayer.querySelector('source');
+
+        let currentIndex = 0; // Start with the first video
+
+        // Function to play the next video in order
+        function playNextVideo() {
+            // Set the source to the current video
+            sourceElement.src = videos[currentIndex];
+            videoPlayer.load(); // Reload the video element
+            videoPlayer.play();
+
+            // Move to the next video index
+            currentIndex = (currentIndex + 1) % videos.length; // Loop back to the first video after the last one
+        }
+
+        // Event listener to play the next video when the current one ends
+        videoPlayer.addEventListener('ended', playNextVideo);
+
+        // Start playing the first video when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            playNextVideo(); // Ensure the first video is set and played
+        });
+
+
+
+// Typewriter effect for intro text
+let i = 0;
+const txt = "Welcome to Health OMEGA... your one-stop destination for all your health updates and more.\n"
+    + "Here you can test your scans and x-rays for possible complications.\n"
+    + "With just one click, our powerfully trained intelligence will give you the verdict with top-notch precision.\n"
+    + "You can also book an appointment with some of the most renowned doctors in town with just one click!";
+const speed = 50;
+
+function typeWriter() {
+    const textElement = document.getElementById("animated-text");
+    if (textElement && i < txt.length) {
+        textElement.innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    }
+}
+
+// Function to download test images
+function downloadTestImages() {
+    window.location.href = 'static/path/to/your/test-images.zip'; // Replace with the correct path to your zip file
+}
+
+// File upload validation and enabling upload functionality
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    const errorMessage = document.getElementById('errorMessageBrain'); // Updated ID
+
+    // Reset error message
+    errorMessage.textContent = '';
+
+    if (file) {
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        // Validate file type
+        if (!allowedTypes.includes(file.type)) {
+            errorMessage.textContent = 'Invalid file type. Please upload a JPG, JPEG, PNG, or WEBP file.';
+            return;
+        }
+
+        // Validate file size (200MB limit)
+        const maxSize = 200 * 1024 * 1024; // 200MB in bytes
+        if (file.size > maxSize) {
+            errorMessage.textContent = 'File size exceeds 200MB. Please upload a smaller file.';
+            return;
+        }
+
+        // Enable the upload button after validation passes
+        document.querySelector('.upload-button').disabled = false;
+    }
+}
+
+// Handle form submission and file upload
+document.getElementById('uploadFormBrain').addEventListener('submit', function (event) { // Updated ID
+    event.preventDefault();
+    const formData = new FormData();
+    const file = document.getElementById('fileInputBrain').files[0]; // Updated ID
+    const errorMessage = document.getElementById('errorMessageBrain'); // Updated ID
+
+    if (file) {
+        formData.append('file', file);
+
+        fetch('/your/upload-endpoint', { // Replace with your backend upload endpoint
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle success
+                alert('File uploaded successfully!');
+            })
+            .catch(error => {
+                // Handle errors
+                errorMessage.textContent = 'Error uploading file. Please try again later.';
+                console.error('There was a problem with the upload operation:', error);
+            });
+    } else {
+        errorMessage.textContent = 'Please select a file to upload.';
+    }
+});
+
+// Additional effects and functionalities
+document.addEventListener('DOMContentLoaded', function () {
+    // Typewriter effect for animated text
+    typeWriter();
+
+    // Lens cards fade-in effect on scroll
+    const cards = document.querySelectorAll('.lens-card');
+    function handleScroll() {
+        const windowHeight = window.innerHeight;
+        cards.forEach(card => {
+            const cardTop = card.getBoundingClientRect().top;
+            if (cardTop < windowHeight * 0.8) { // Trigger when the card is 80% visible
+                card.classList.add('show');
+            }
+        });
+    }
+    handleScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll);
+
+    // Handle form submission on the appointment page
+    const appointmentForm = document.getElementById('appointmentForm');
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('Details Received, Confirming your Appointment');
+            appointmentForm.reset(); // Optionally reset the form
+        });
+    }
+
+    // Transition image effect when navigating pages
+    const transitionImage = document.getElementById('transition-image');
+    function showTransitionImage() {
+        if (transitionImage) {
+            transitionImage.style.display = 'block';
+            setTimeout(() => {
+                transitionImage.style.display = 'none';
+            }, 2000); // Hide after 2 seconds
+        }
+    }
+
+    // Show transition image when page loads
+    showTransitionImage();
+
+    // Handle transitions when navigating via links
+    document.querySelectorAll('a').forEach(anchor => {
+        anchor.addEventListener('click', function () {
+            if (anchor.getAttribute('href') !== '#') {
+                showTransitionImage();
+            }
+        });
+    });
+});
+</script> -->
+
+
+    <!-- Link to external JavaScript file -->
+    <!-- <script src="scripts.js"></script> -->
+</body>
+</html>

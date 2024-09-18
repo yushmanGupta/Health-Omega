@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuberculosis Prediction</title>
+    <style>
+        /* General body styles */
+        body {
+            font-family: Arial, sans-serif;
+            /* background-color: #f4f4f4; */
+            background-image:url("{{ url_for('static', filename='Tuberculosis Bg.jpg') }}") ;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Container styling */
+        .container {
+            max-width: 720px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #dbeaea;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-height: 60vh;
+        }
+        
+        /* Header styling */
+        h1 {
+            color: #113f67;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        /* Prediction result text */
+        .result p {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        /* Probability list */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        ul li {
+            font-size: 18px;
+            color: #666;
+            padding: 8px 0;
+        }
+        
+        /* Styling for the Go Back link */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: white;
+            background-color: #113f67;
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .back-link:hover {
+            background-color: #79c2d0;
+        }
+        
+        /* Dropdown for disease predictions */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+        }
+        
+        .dropdown-content a {
+            color: #113f67;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #79c2d0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Button styling */
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        #loader {
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+        }
+        
+        
+/* Styles for the new link container */
+        .links-container {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 150px; /* Adjust as needed */
+            display: flex;
+            align-items: center; /* Align items vertically */
+            gap: 50px; /* Space between buttons */
+        }
+
+        .links-container a {
+            background-color: #f2f2f2; /* Button background color */
+            color: #113f67; /* Button text color */
+            padding: 18px 1px; /* Smaller padding for smaller buttons */
+            text-align: center;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+            font-size: 20px; /* Smaller font size */
+        }
+
+        .links-container a:hover {
+            background-color: #79c2d0; /* Hover background color */
+        }
+
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f2f2f2;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #113f67;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #79c2d0;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Ensure the main content is positioned properly */
+        .main-content {
+            position: relative; /* Allow for absolute positioning of links */
+        }
+
+        /* Adjusting the Free Lens link to match Book an Appointment */
+        .dropdown > a {
+            padding: 18px 20px; /* Adjusted padding */
+            background-color: #f2f2f2;
+            color: #113f67;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown > a:hover {
+            background-color: #79c2d0;
+        }
+        /* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Header Section */
+header {
+    background-color: #f2f2f2;
+    height: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px; /* Added space on the left */
+}
+
+.logo {
+    width: 300px;
+    height: 60px;
+    background-image: url("{{ url_for('static', filename='logo.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0; /* For fade-in effect */
+    animation: fadeIn 2s forwards;
+    transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+.footer-band {
+        background-color: #616C6E; /* Dark shade for the band */
+        color: #f2f2f2; /* Light text color */
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        width: 100%;
+        height:60px;
+        animation: slideIn 1s ease-out; /* Slide-in animation */
+        box-sizing: border-box; /* Ensure padding is included in width */
+    }
+
+    .footer-band img {
+        width: 1px; /* Smaller image size */
+        height: auto;
+        vertical-align: middle; /* Align image with text */
+        margin-right: 10px; /* Space between image and text */
+    }
+
+    .footer-band p {
+        display: inline; /* Ensure text is in line with image */
+        text-align: justify; /* Justify text */
+        max-width: 80%; /* Optional: Restrict text width */
+        margin: 0; /* Remove default margin */
+    }
+
+    /* Keyframes for horizontal slide-in animation */
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%); /* Start from left of the viewport */
+            opacity: 0; /* Initially hidden */
+        }
+        to {
+            transform: translateX(0); /* Move to original position */
+            opacity: 1; /* Fully visible */
+        }
+    }
+
+/* Logo Image Styles */
+.logo {
+    /* Ensures the logo is aligned left and positioned properly */
+    position: relative; 
+    display: flex; /* Using flex to align */
+    align-items: center;
+    padding: 10px; /* Adjust padding as needed */
+}
+
+/* Initial styling for the logo image */
+.logo-image {
+    width: 250px; /* Very small size */
+    height: auto; /* Maintains the aspect ratio */
+    margin-left: 0; /* Left-aligned */
+    transform: translateX(-100px); /* Start position for float-in effect */
+    opacity: 0; /* Hidden initially for the animation */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, transform 0.3s ease; /* Transitions for both hover and float-in effects */
+}
+
+/* Float-in effect */
+.logo-image {
+    animation: floatIn 2s forwards; /* Animation to float in */
+}
+
+/* Keyframes for float-in effect */
+@keyframes floatIn {
+    0% {
+        transform: translateX(-100px); /* Starting position */
+        opacity: 0; /* Start hidden */
+    }
+    100% {
+        transform: translateX(0); /* End position */
+        opacity: 1; /* End visible */
+    }
+}
+
+/* Zoom-in effect on hover */
+.logo-image:hover {
+    transform: scale(1.5); /* Zoom in on hover */
+    cursor: pointer; /* Optional cursor change on hover */
+}            </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo"></div>
+    </header>
+
+
+    <!-- Links Container Section -->
+    <div class="links-container">
+        <div class="dropdown">
+            <a href="#">Free Lens</a>
+            <div class="dropdown-content">
+                <a href="/brain">Brain Tumor</a>
+                <a href="/lung">Lung Cancer</a>
+                <a href="/kidney">Kidney Disease</a>
+                <a href="/tb">Tuberculosis</a>
+            </div>
+        </div>
+        <a href="{{ url_for('about') }}" target="_blank">About Us</a>
+        <a href="{{ url_for('appointment') }}" target="_blank">Book an Appointment</a>
+    </div>
+
+    <div class="container">
+        <h2><u>Prediction</u>: {{ request.args.get('prediction') }}</h2>
+        <h2><u>Symptoms</u></h2>
+        <ul>
+            <li>Chronic cough</li>
+            <li>Weight loss</li>
+            <li>Fever</li>
+        </ul>
+        <h2><u>Causes</u></h2>
+        <ul>
+            <li>Infection by Mycobacterium tuberculosis</li>
+            <li>Weakened immune system</li>
+        </ul>
+        <a href="/" class="back-link">Go back to Home</a>
+    </div>
+
+<!-- Footer Band Section -->
+<div class="footer-band">
+    <a href="https://abcd.com">
+        <img src="{{ url_for('static', filename='github_.png') }}" alt="Footer Image" style="width: 50px; height: auto;">
+    </a>    
+
+    <p>© 2024 Health Omega. All Rights Reserved. </p>
+</div>
+
+</body>
+</html>
